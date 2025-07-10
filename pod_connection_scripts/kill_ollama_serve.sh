@@ -1,0 +1,1 @@
+ssh -J csc-pod gaborszita@pod-gpu "pkill -SIGINT -f \"/bin/ollama serve\""

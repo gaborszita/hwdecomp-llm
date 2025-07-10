@@ -1,0 +1,1 @@
+rsync -avz ./ csc-pod:/home/gaborszita/hwdecomp-llm
