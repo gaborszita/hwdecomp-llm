@@ -1,0 +1,1 @@
+EQY_PATH = '/home/gaborszita/oss-cad-suite/bin/eqy'
