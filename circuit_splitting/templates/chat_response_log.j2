@@ -1,0 +1,6 @@
+{% for message in messages %}
+{{ message.role.capitalize() }}:
+
+{{ message.content }}
+
+{% endfor %}

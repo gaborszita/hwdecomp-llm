@@ -1,0 +1,39 @@
+{% if last_agent_response is not none %}
+
+The following is the output from the last agent in the chain:
+
+{{ last_agent_response }}
+
+Based on this, either:
+- Generate the next question you need to ask to complete your task, or
+- If you already have all the necessary information, output the next state values of the registers.
+
+Again, your task is: Determine the next-state function of all registers in the Verilog module based only on the inputs of the top module, which begin with the prefix io_.
+
+You may and should use internal temporary wires (which begin with internal_ and intermediate_io_) during your intermediate reasoning steps or when asking questions. However, the final next-state expression for any register must not include any internal_ or intermediate_io_ wires.
+
+You must continue asking questions until you can fully complete your task.
+
+{% else %}
+
+Task: Determine the next-state function of all registers in the Verilog module based only on the inputs of the top module, which begin with the prefix io_.
+
+You may and should use internal temporary wires (which begin with internal_ and intermediate_io_) during your intermediate reasoning steps or when asking questions. However, the final next-state expression for any register must not include any internal_ or intermediate_io_ wires.
+
+It is acceptable for the register's own name to appear in its next-state function (e.g., for feedback or state-holding behavior). But if, after reduction, the expression still contains any internal_ or intermediate_io_ wires, you must ask for the definitions of those wires in terms of io_ signals, and continue reducing until the expression is fully described using only io_ inputs and register names.
+
+The next state values of the registers must be expressed in formal Boolean algebra form (also known as Boolean expressions or Boolean functions).
+
+You can obtain information about the module by asking questions to an LLM agent that has access to it. Since the Verilog module can be very large and may not fit entirely within the LLM’s context window, you should ask only one small and specific question at a time. Never include multiple questions in a single query. This is very important: always ask only one thing in one question. Therefore, When tracing signals, you must only ask to trace one signal per request. Do not ask for multiple signals in the same question.
+
+Important context:
+- The Verilog module has been split into submodules due to context window limitations.
+- All the logic (including registers) resides inside these submodules; the top module only instantiates them.
+- Questions are answered using a Chain of Agents approach, where each submodule is handled by its own agent.
+- Therefore, when you ask about a signal, you might only receive information tracing that signal up to the inputs and outputs of the relevant submodule.
+
+Please list the first question you want to ask. Wrap your question within [QUESTION] and [/QUESTION].
+
+{% endif %}
+
+Let's think step-by-step.
